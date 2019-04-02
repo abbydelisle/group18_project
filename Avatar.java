@@ -1,16 +1,23 @@
 import javafx.scene.input.KeyCode;
 
-public class Avatar extends Character{
+public class Avatar{
 	private int life = 5;
 	private int x_coordinate = 0;
 	private int y_coordinate = 0;
 	private int movement = 10;
 	private boolean avatar_hit = false;
 	public boolean shoots = false;
+	public int e_killed = 0;
 	
 	public Avatar (int x, int y) {
 		setX_coordinate(x);
 		setY_coordinate(y);
+	}
+	public int getE_killed() {
+		return e_killed;
+	}
+	public void setE_killed(int value) {
+		e_killed = value;
 	}
 	public int getLife() {
 		return life;
@@ -18,18 +25,22 @@ public class Avatar extends Character{
 	public void setLife(int life) {
 		this.life = life;
 	}
+	public void delete() {
+		setX_coordinate(-1000);
+		setY_coordinate(-1000);
+		
+	}
+
 	public void loseLife() {
 		setAvatar_hit(true);
 		setLife(getLife() - 1);
 	}
-	@Override
 	public int getX_coordinate() {
 		return x_coordinate;
 	}
 	public void setX_coordinate(int x_coordinate) {
 		this.x_coordinate = x_coordinate;
 	}
-	@Override
 	public int getY_coordinate() {
 		return y_coordinate;
 	}

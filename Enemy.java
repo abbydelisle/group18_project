@@ -1,6 +1,6 @@
 import javafx.scene.input.KeyCode;
 
-public class Enemy extends Character {
+public class Enemy{
 	private int x_coordinate = 0;
 	private int y_coordinate = 0;
 	private int movement = 7;

@@ -1,56 +1,43 @@
+import java.util.ArrayList;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
 
 public class Heart_GUI extends Heart {
-	private Image image;
-	ImageView iv = new ImageView();
-	private int width;
-	private int height;
-	
-	public Heart_GUI(Image image, int w, int h, int x, int y) {
-		super (x,y);
-		setImage(image);
-		iv.setImage(getImage());
-		iv.setX(getX_coordinate());
-		iv.setY(getY_coordinate());
-		setWidth(w);
-		setHeight(h);
+	private Image img;
+	private ArrayList<ImageView> heartiv = new ArrayList<ImageView>();
+	public Heart_GUI(Image image) {
+		setImg(image);
 	}
-
-	public ImageView getIV() {
-		return iv;
+	public void addHearts(Pane pane) {
+		removeHearts(pane);
+		super.removeHeartList();
+		super.createHeartList();
+		for (int i = 0; i < super.getHeartList_x().size(); i ++) {
+		int x = super.getHeartList_x().get(i);
+		ImageView heart = new ImageView();
+		heart.setImage(getImg());
+		heart.setX(x);
+		heart.setY(super.getY());
+		heart.setFitHeight(20);
+		heart.setFitWidth(20);
+		pane.getChildren().add(heart);
+		heartiv.add(heart);
+		}
 	}
-	public Image getImage() {
-		return image;
-	}
-
-	public void setImage(Image image) {
-		this.image = image;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		iv.setFitWidth(width);
-		this.width = width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		iv.setFitHeight(height);
-		this.height = height;
+	public void removeHearts(Pane pane) {
+		for (int i = 0; i < heartiv.size(); i ++) {
+		pane.getChildren().remove(heartiv.get(i));
+		}
+		heartiv.remove(heartiv);
 	}
 	
-	public void movement(KeyCode code) {
-		super.movement(code);
-		iv.setX(getX_coordinate());
-		iv.setY(getY_coordinate());
+	public Image getImg() {
+		return img;
 	}
-
+	public void setImg(Image img) {
+		this.img = img;
+	}
 }

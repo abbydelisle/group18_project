@@ -64,15 +64,15 @@ public class Bullet_GUI extends Bullet {
 		iv.setX(getX_coordinate());
 		iv.setY(getY_coordinate());
 	}
-	public void shoot(ArrayList<Enemy_GUI> enemy_list, Pane pane, Avatar_GUI avatar) {
+	public void shoot(ArrayList<Enemy_GUI> enemy_list, Pane pane, Avatar_GUI avatar, Heart_GUI heart, AnimationTimer bulletTimer) {
 		if (getType().equals("avatar")) {
-		this.shootAvatar(enemy_list, pane);
+		this.shootAvatar(enemy_list, pane, avatar);
 		}
 		else {
-			this.shootEnemy(avatar, pane);
+			this.shootEnemy(avatar, pane, heart, bulletTimer);
 		}
 	}
-	public void shootAvatar(ArrayList<Enemy_GUI> enemy_list, Pane pane) {
+	public void shootAvatar(ArrayList<Enemy_GUI> enemy_list, Pane pane, Avatar avatar) {
 		for (int i = 0; i <5; i++) {
 		if (!iv.getBoundsInParent().intersects(enemy_list.get(i).getIV().getBoundsInParent()) 
 				&& iv.getTranslateY() > -20) {
@@ -88,11 +88,13 @@ public class Bullet_GUI extends Bullet {
 			enemy_list.get(i).delete();
 			enemy_list.get(i).setDead(true);
 			this.delete();
+			avatar.setE_killed(avatar.getE_killed() + 1);
+
 			}
 		}
 		
 	}
-	public void shootEnemy(Avatar_GUI avatar, Pane pane) {
+	public void shootEnemy(Avatar_GUI avatar, Pane pane, Heart_GUI heart, AnimationTimer bulletTimer) {
 		avatar.setAvatar_hit(false);
 		if (!iv.getBoundsInParent().intersects(avatar.getIV().getBoundsInParent()) 
 				&& iv.getTranslateY() < 800){
@@ -104,7 +106,10 @@ public class Bullet_GUI extends Bullet {
 		// and set avatar to true
 		else if (iv.getBoundsInParent().intersects(avatar.getIV().getBoundsInParent())){
 			pane.getChildren().remove(iv);
-			avatar.loseLife();
+			heart.loseLife();
+			bulletTimer.stop();
+			//System.out.println(heart.getLife());
+			heart.addHearts(pane);
 			//avatar_hit = true;
 			}
 		}

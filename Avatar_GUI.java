@@ -52,5 +52,13 @@ public class Avatar_GUI extends Avatar {
 		iv.setX(getX_coordinate());
 		iv.setY(getY_coordinate()); 
 	}
+	public void delete() {
+		super.delete();
+		setWidth(1);
+		setHeight(1);
+		iv.setX(getX_coordinate());
+		iv.setY(getY_coordinate());
+	}
+
 	
 }

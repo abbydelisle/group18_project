@@ -12,7 +12,10 @@ import javafx.stage.Stage;
 
 public class Spaces_GUI extends Application {
 	Stage stage;
+	private String quit = "Quit";
 	static Scene scene;
+	private boolean avatar_dead = false;
+	private boolean e_dead = false;
 	static Image avatar_image = new Image("avatar.png");
 	static Pane pane = new Pane();
 	Avatar_GUI avatar = new Avatar_GUI(avatar_image, 60, 60, 265, 700);
@@ -20,6 +23,7 @@ public class Spaces_GUI extends Application {
 	static Image heart_image = new Image("heart.png");
 	static Image bullet_image = new Image("mario1.gif");
 	static Image bullete_image = new Image("luigi1.gif");
+	MenuBox menuBox = new MenuBox();
 	
 	
 	Enemy_GUI enemy1 = new Enemy_GUI(enemy_image, 60, 60, 400, 500);
@@ -28,12 +32,7 @@ public class Spaces_GUI extends Application {
 	Enemy_GUI enemy4 = new Enemy_GUI(enemy_image, 60, 60, 400, 500);
 	Enemy_GUI enemy5 = new Enemy_GUI(enemy_image, 60, 60, 400, 500);
 	ArrayList<Enemy_GUI> enemy_list = new ArrayList<Enemy_GUI>(5);
-	Heart_GUI heart = new Heart_GUI(heart_image, 20, 20, 10, 10);
-	Heart_GUI heart2 = new Heart_GUI(heart_image, 20, 20, 40, 10);
-	Heart_GUI heart3 = new Heart_GUI(heart_image, 20, 20, 70, 10);
-	Heart_GUI heart4 = new Heart_GUI(heart_image, 20, 20, 100, 10);
-	Heart_GUI heart5 = new Heart_GUI(heart_image, 20, 20, 130, 10);
-	ArrayList<Heart_GUI> heart_list = new ArrayList<Heart_GUI>(5);
+	Heart_GUI heart = new Heart_GUI(heart_image);
 
 	
 	public static void main (String[] args) {
@@ -58,47 +57,79 @@ public class Spaces_GUI extends Application {
 				for (int i = 0; i < 5; i++) {
 					enemy_list.get(i).moveRan();
 				}
+				if (avatar_dead) {
+					stop();
+					quit = "Lost";
+					endGame();
+				}
+				if (e_dead) {
+					stop();
+					quit = "Won";
+					endGame();
+				}
 			for (int i = 0; i <5; i++) {
 				if(enemy_list.get(i).enemyShoot()) {
-					shoot(enemy_list.get(i), "enemy" + i);
+					shoot("enemy" + i, avatar, enemy_list.get(i));
 				}
 			}
 			}
 		};
 		
 		eTimer.start();
-		heart_list.add(heart);
-		heart_list.add(heart2);
-		heart_list.add(heart3);
-		heart_list.add(heart4);
-		heart_list.add(heart5);
-		
-		pane.getChildren().addAll(heart.getIV(), heart2.getIV(), heart3.getIV(), heart4.getIV(), heart5.getIV());
+		heart.addHearts(pane);
+		//pane.getChildren().addAll(heart.getIV(), heart2.getIV(), heart3.getIV(), heart4.getIV(), heart5.getIV());
 		scene = new Scene(pane, 600, 800, Color.BLACK);
 		scene.setOnKeyPressed(e -> {
 			avatar.movement(e.getCode());
+			if (e.getCode() == KeyCode.Q) {
+				quit = "Quit";
+				endGame();
+			}
 			if (avatar.getShoots()) {
-				shoot(avatar, "avatar");
+				shoot("avatar", avatar, null);
 			}
 		});
 		stage.setScene(scene);
 		stage.show();
 		
 	}
-	public void shoot(Character character, String type) {
+	public void endGame() {
+		if (quit.equals("Won")) {
+			menuBox.Win(stage);
+		}
+		
+		// if avatar is dead; quit condition '2'
+		else if (quit.equals("Lost")) {
+			menuBox.Lose(stage);
+		}
+		
+		// if 'Q' is pressed; quit condition '0'
+		else {
+			menuBox.Quit(stage);
+		}
+		
+	}
+	public void shoot(String type, Avatar_GUI avatar, Enemy_GUI enemy) {
 		Bullet_GUI bullet;
 		if (type == "avatar") {
-			bullet = new Bullet_GUI(bullet_image, 60, 35, character.getX_coordinate(), character.getY_coordinate(), type); 
+			bullet = new Bullet_GUI(bullet_image, 60, 35, avatar.getX_coordinate(), avatar.getY_coordinate(), type); 
 		}
 		else {
-		bullet = new Bullet_GUI(bullete_image, 50, 35, character.getX_coordinate(), character.getY_coordinate() + 30, type); 
+		bullet = new Bullet_GUI(bullete_image, 50, 35, enemy.getX_coordinate(), enemy.getY_coordinate() + 30, type); 
 		}
 		
 		pane.getChildren().add(bullet.getIV());
 		AnimationTimer bulletTimer = new AnimationTimer() {
 			@Override
 			public void handle(long now) {
-				bullet.shoot(enemy_list, pane, avatar);
+				bullet.shoot(enemy_list, pane, avatar, heart, this);
+				if (heart.getLife() == 0) {
+					avatar.delete();
+					avatar_dead = true;
+				}
+				if (avatar.getE_killed() == 5) {
+					e_dead = true;
+				}
 			}
 		};
 		bulletTimer.start();
