@@ -6,14 +6,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
-public class Bullet_GUI extends Bullet {
+public class Boss_Bullet_GUI extends Bullet {
 	private Image image;
 	ImageView iv = new ImageView();
 	private int width;
 	private int height;
 	private String type;
 	
-	public Bullet_GUI(Image image, int w, int h, int x, int y, String type) {
+	public Boss_Bullet_GUI(Image image, int w, int h, int x, int y, String type) {
 		super (x,y);
 		setImage(image);
 		iv.setImage(getImage());
@@ -64,18 +64,17 @@ public class Bullet_GUI extends Bullet {
 		iv.setX(getX_coordinate());
 		iv.setY(getY_coordinate());
 	}
-	public void shoot(ArrayList<Enemy_GUI> enemy_list, Pane pane, Avatar_GUI avatar, Heart_GUI heart, AnimationTimer bulletTimer) {
+	public void shoot(Boss_GUI boss, Pane pane, Avatar_GUI avatar, Heart_GUI heart, AnimationTimer bulletTimer) {
 		if (getType().equals("avatar")) {
-		this.shootAvatar(enemy_list, pane, avatar);
+		this.shootAvatar(boss, pane, avatar);
 		}
 		else {
 			this.shootEnemy(avatar, pane, heart, bulletTimer);
 		}
 	}
 
-	public void shootAvatar(ArrayList<Enemy_GUI> enemy_list, Pane pane, Avatar avatar) {
-		for (int i = 0; i <5; i++) {
-		if (!iv.getBoundsInParent().intersects(enemy_list.get(i).getIV().getBoundsInParent()) 
+	public void shootAvatar(Boss_GUI boss, Pane pane, Avatar avatar) {
+		if (!iv.getBoundsInParent().intersects(boss.getIV().getBoundsInParent()) 
 				&& iv.getTranslateY() > -20) {
 			this.moveUp();
 			iv.setX(getX_coordinate());
@@ -83,16 +82,16 @@ public class Bullet_GUI extends Bullet {
 			}
 		// if the bullet does intersect with an enemy, set enemy to dead, remove the bullet and enemy
 		// from the Pane, delete enemy from the list, and add one to number of enemies avatar has killed
-		else if (iv.getBoundsInParent().intersects(enemy_list.get(i).getIV().getBoundsInParent()) ){
-			pane.getChildren().remove(enemy_list.get(i).getIV());
+		else if (iv.getBoundsInParent().intersects(boss.getIV().getBoundsInParent()) ){
+			pane.getChildren().remove(boss.getIV());
 			pane.getChildren().remove(iv);
-			enemy_list.get(i).delete();
-			enemy_list.get(i).setDead(true);
+			boss.delete();
+			boss.setDead(true);
 			this.delete();
 			avatar.setE_killed(avatar.getE_killed() + 1);
 
 			}
-		}
+		
 		
 	}
 	public void shootEnemy(Avatar_GUI avatar, Pane pane, Heart_GUI heart, AnimationTimer bulletTimer) {
