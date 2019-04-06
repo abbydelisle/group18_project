@@ -22,7 +22,7 @@ public class Spaces_GUI extends Application {
 	static Image background = new Image("background.jpg");
 	static ImageView iv = new ImageView(background);
 	static Pane pane = new Pane();
-	Avatar_GUI avatar = new Avatar_GUI(avatar_image, 60, 60, 265, 700);
+	static Avatar_GUI avatar = new Avatar_GUI(avatar_image, 60, 60, 265, 700);
 	static Image enemy_image = new Image("enemy.png");
 	static Image heart_image = new Image("heart.png");
 	static Image bullet_image = new Image("mario1.gif");
@@ -36,7 +36,7 @@ public class Spaces_GUI extends Application {
 	Enemy_GUI enemy4 = new Enemy_GUI(enemy_image, 60, 60, 400, 500);
 	Enemy_GUI enemy5 = new Enemy_GUI(enemy_image, 60, 60, 400, 500);
 	ArrayList<Enemy_GUI> enemy_list = new ArrayList<Enemy_GUI>(5);
-	Heart_GUI heart = new Heart_GUI(heart_image);
+	static Heart_GUI heart = new Heart_GUI(heart_image);
 
 	
 	public static void main (String[] args) {
@@ -81,7 +81,7 @@ public class Spaces_GUI extends Application {
 		};
 		
 		eTimer.start();
-		heart.addHearts(pane);
+		heart.addHearts(pane, 10);
 		
 		scene = new Scene(pane, 600, 800, Color.BLACK);
 		
@@ -102,6 +102,9 @@ public class Spaces_GUI extends Application {
 	public void endGame() {
 		if (quit.equals("Won")) {
 			menuBox.Win(stage);
+		}
+		else if (quit.equals("Won Boss")) {
+			menuBox.WinBoss(stage);
 		}
 		
 		// if avatar is dead; quit condition '2'

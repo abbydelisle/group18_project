@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -9,130 +6,117 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class BossFight extends Application{
-	static final int intQuit = 0;
-	static final int intWin = 1;
-	static final int intLose = 2;
-
-	Stage window;
+public class BossFight extends Spaces_GUI{
+	Stage stage;
 	Scene scene;
 	boolean avatar_dead = false;
 	boolean boss_dead = false;
-	double t = 0;
-	int quit = 0;
-
-	Pane layout = new Pane();
-	Image avatarImage = new Image("avatar.png");
-	Image heartImage = new Image("heart.png");
-	Heart heart = new Heart();
-	Avatar avatar = new Avatar(300, 500, 60, 60, "avatar", avatarImage);
-	MenuBox menuBox = new MenuBox();
-	Image bossImage = new Image("boss.png");
-	ArrayList<Character> heartList = new ArrayList<Character>(5);
-	Boss boss = new Boss(150, 70, 300, 200, "boss", bossImage);
-
-	public static void main(String[] args){
+	String quit = "Quit";
+	Pane pane = new Pane();
+	// avatar_image;
+	// heart_image;
+	// backgorund
+	// iv;
+	//Avatar_GUI avatar = new Avatar_GUI(avatar_image, 60, 60, 265, 700);
+	Image boss_image = new Image("boss.png");
+	Boss_GUI boss = new Boss_GUI(boss_image, 100, 100, 400, 500);
+	Heart_GUI boss_heart = new Heart_GUI(heart_image);
+	
+	public static void main (String[] args) {
 		launch(args);
-		}
+	}
 	@Override
-	public void start(Stage primaryStage) throws Exception{
-		window = primaryStage;
-		window.setTitle("Space Invaders Boss Fight");
-		layout.setStyle("-fx-background-color:black;");
-		layout.getChildren().add(avatar);
-		layout.getChildren().add(boss);
-		AnimationTimer bossTimer = new AnimationTimer() {
+	public void start (Stage stage) {
+		this.stage = stage;
+		stage.setTitle("Space Invaders Boss Fight");
+		pane.getChildren().addAll(iv);
+		pane.getChildren().add(avatar.getIV());
+		pane.getChildren().add(boss.getIV());
+		AnimationTimer eTimer = new AnimationTimer() {
 			@Override
-			public void handle(long now) {
+			public void handle (long now) {
+				boss.moveRan();
 				if (avatar_dead) {
 					stop();
-					quit = intLose;
+					quit = "Lost";
 					endGame();
-				}
+					}
 				if (boss_dead) {
 					stop();
-					quit = intWin;
+					quit = "Won Boss";
 					endGame();
 				}
-				boss.moveRan();
-				if (boss.bossShoot() == true) {
-					shoot(boss, Color.RED);
+				if(boss.enemyShoot()) {
+					shoot("enemy" + 1, avatar, boss);
+				}
+				
+			}
+		};
+		eTimer.start();
+		heart.addHearts(pane, 10);
+		boss_heart.addHearts(pane, 400);
+		scene = new Scene(pane, 600, 800, Color.BLACK);
+		scene.setOnKeyPressed(e -> {
+			avatar.movement(e.getCode());
+			if (e.getCode() == KeyCode.Q) {
+				quit = "Quit";
+				endGame();
+			}
+			if (avatar.getShoots()) {
+				shoot("avatar", avatar, boss);
+			}
+		});
+		stage.setScene(scene);
+		stage.show();
+		
+
+
+		
+	}
+	public void endGame() {
+		if (quit.equals("Won")) {
+			menuBox.Win(stage);
+		}
+		else if (quit.equals("Won Boss")) {
+			menuBox.WinBoss(stage);
+		}
+		
+		// if avatar is dead; quit condition '2'
+		else if (quit.equals("Lost")) {
+			menuBox.Lose(stage);
+		}
+		
+		// if 'Q' is pressed; quit condition '0'
+		else {
+			menuBox.Quit(stage);
+		}
+		
+	}
+
+	public void shoot(String type, Avatar_GUI avatar, Boss_GUI boss) {
+		Boss_Bullet_GUI bullet;
+		if (type == "avatar") {
+			bullet = new Boss_Bullet_GUI(bullet_image, 60, 35, avatar.getX_coordinate(), avatar.getY_coordinate(), type); 
+		}
+		else {
+		bullet = new Boss_Bullet_GUI(bullete_image, 50, 35, boss.getX_coordinate(), boss.getY_coordinate() + 30, type); 
+		}
+		
+		pane.getChildren().add(bullet.getIV());
+		AnimationTimer bulletTimer = new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+				bullet.shoot(boss, pane, avatar, heart, boss_heart, this);
+				if (heart.getLife() == 0) {
+					avatar.delete();
+					avatar_dead = true;
+				}
+				if (boss_heart.getLife() == 0) {
+					boss_dead = true;
 				}
 			}
 		};
-		bossTimer.start();
-		scene = new Scene(layout, 600, 800, Color.BLACK);
-		scene.setOnKeyPressed(e -> {
-			if (e.getCode() == KeyCode.Q) {
-				quit = intQuit;
-				endGame();
-			}
-			else if (avatar.movement(e.getCode()) == true){
-				shoot(avatar,Color.YELLOW);
-				}
-			});
-		heart.numHeart(heartList, avatar, heartImage);
-		layout.getChildren().addAll(heartList);
-		window.setScene(scene);
-		window.show();
-		}
-
-	public void endGame() {
-		// if all enemies are dead; quit conditon '1'
-		if (quit == intWin) {
-			menuBox.WinBoss(window);
-		}
-
-
-		// if avatar is dead; quit condition '2'
-		else if (quit == intLose) {
-			menuBox.Lose(window);
-		}
-
-		// if 'Q' is pressed; quit condition '0'
-		else {
-			menuBox.Quit(window);
-		}
-		}
-	public void shoot(Character piece, Color color){
-		Bullet bullet;
-		if (piece == avatar) {
-		bullet = new Bullet((int) piece.getX() + 20, (int) piece.getY(), 5, 20, piece.getType() + "Bullet", color);
-		}
-		else {
-			bullet = new Bullet((int) piece.getX() + 110, (int) piece.getY() + 170, 5, 20, piece.getType() + "Bullet", color);
-		}
-		layout.getChildren().add(bullet);
-
-		// Creates a new timer in which the bullets are shot
-		AnimationTimer bulletTimer = new AnimationTimer(){
-			@Override
-			public void handle(long now){
-				// runs the shooter class for the specific bullet, and removes enemies/avatar if hit
-				// uses the boolean shooter returns to determine if avatar was hit
-				boolean avatar_hit = bullet.bossShooter(avatar, boss, layout, heart, heartList, heartImage);
-
-				// if avatar is hit, stop the timer, which will run another timer again
-				if(avatar_hit) {
-					stop();
-					}
-
-				// if avatar life is zero, then remove the avatar, and set avatar_dead to true
-				if (avatar.getLife() == 0) {
-					avatar.delete();
-					avatar_dead = true;
-					}
-
-				// if the boss is killed, set boss_dead to true
-				if (boss.getBossLife() == 0) {
-					boss_dead = true;
-					}
-				}
-			};
-			bulletTimer.start();
-			}
-
-
-
-
-}
+		bulletTimer.start();
+		
+	}
+	}

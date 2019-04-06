@@ -1,35 +1,52 @@
 import java.util.ArrayList;
 
-import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 
-/* This class creates a Heart object which uses a list of Characters
-   the Avatar, and the image of the heart, and adds Hearts of type Character
-   to the list */
+
 public class Heart {
+	private int life = 5;
+	private int y = 10;
+	private ArrayList<Integer> heartList_x = new ArrayList<Integer>();
 
-	static final int start_x = 10;
-	static final int x_gap = 30;
-	static final int heart_y = 10;
-	static final int heart_width = 20;
-	static final int heart_length = 20;
+	
+	public void createHeartList(int j){
+		for (int i = 0; i < getLife(); i++) {
+			heartList_x.add(j + i*30);
+			System.out.println(heartList_x.size());
+		}		
+	}
+	public void removeHeartList(){
+			heartList_x.removeAll(heartList_x);
+				
+	}
 
-	/* This method uses a list, Avatar, and image. It gets the number of lives the
-	   Avatar has and use it to add the respective number of hearts to the list */
-	public void numHeart(ArrayList<Character> list, Avatar avatar, Image image){
-		int heart_x = start_x;
-		for (int i = 0; i < avatar.getLife(); i++){
-			Character insertHeart = new Character(heart_x, heart_y, heart_width,
-			heart_length, "heart", image);
-			list.add(insertHeart);
-			heart_x += x_gap;
-			}
+	public int getLife() {
+		return life;
+	}
+
+	public void setLife(int life) {
+		if (life >= 0) {
+		this.life = life;
 		}
-	/* This method uses a list, Avatar, and image. Revmoes all the hearts from the list
-	   Then It gets the number of lives the Avatar has and use it to add the respective
-	   number of hearts to the list */
-	public void removeHeart(ArrayList<Character> list, Avatar avatar, Image image){
-		list.removeAll(list);
-		//int f = 10;
-		numHeart(list, avatar, image);
-		}
+	}
+
+	public ArrayList<Integer> getHeartList_x() {
+		return heartList_x;
+	}
+
+	public void setHeartList_x(ArrayList<Integer> heartList) {
+		this.heartList_x = heartList;
+	}
+
+	public int getY() {
+		return y;
+	}
+	public void loseLife() {
+		setLife(getLife()-1);
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
 }
