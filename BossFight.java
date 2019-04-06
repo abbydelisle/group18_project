@@ -13,6 +13,7 @@ public class BossFight extends Spaces_GUI{
 	boolean boss_dead = false;
 	String quit = "Quit";
 	Pane pane = new Pane();
+	public static String hearts = "5";
 	// avatar_image;
 	// heart_image;
 	// backgorund
@@ -22,7 +23,15 @@ public class BossFight extends Spaces_GUI{
 	Boss_GUI boss = new Boss_GUI(boss_image, 100, 100, 400, 500);
 	Heart_GUI boss_heart = new Heart_GUI(heart_image);
 	
+	
+	public static void setHearts(String num_hearts) {
+		hearts = num_hearts;
+	}
+	public String getHearts() {
+		return hearts;
+	}
 	public static void main (String[] args) {
+		setHearts(args[0]);
 		launch(args);
 	}
 	@Override
@@ -53,6 +62,7 @@ public class BossFight extends Spaces_GUI{
 			}
 		};
 		eTimer.start();
+		heart.setLife(Integer.parseInt(getHearts()));
 		heart.addHearts(pane, 10);
 		boss_heart.addHearts(pane, 400);
 		scene = new Scene(pane, 600, 800, Color.BLACK);
@@ -75,7 +85,7 @@ public class BossFight extends Spaces_GUI{
 	}
 	public void endGame() {
 		if (quit.equals("Won")) {
-			menuBox.Win(stage);
+			menuBox.Win(stage, heart);
 		}
 		else if (quit.equals("Won Boss")) {
 			menuBox.WinBoss(stage);

@@ -12,7 +12,6 @@ public class Heart {
 	public void createHeartList(int j){
 		for (int i = 0; i < getLife(); i++) {
 			heartList_x.add(j + i*30);
-			System.out.println(heartList_x.size());
 		}		
 	}
 	public void removeHeartList(){

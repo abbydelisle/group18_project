@@ -101,7 +101,7 @@ public class Spaces_GUI extends Application {
 	}
 	public void endGame() {
 		if (quit.equals("Won")) {
-			menuBox.Win(stage);
+			menuBox.Win(stage, heart);
 		}
 		else if (quit.equals("Won Boss")) {
 			menuBox.WinBoss(stage);

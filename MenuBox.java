@@ -14,8 +14,9 @@ public class MenuBox{
 	Text won = new Text (10, 10, "You Won!");
 	Text lost = new Text (10, 10, "You Lost!");
 	VBox vbox = new VBox(); 
+	int hearts = 0;
 	
-	public void Win(Stage window) {
+	public void Win(Stage window, Heart_GUI heart) {
 		vbox.getChildren().add(won);
 		vbox.getChildren().add(b1);
 		vbox.getChildren().add(b2);
@@ -24,6 +25,7 @@ public class MenuBox{
 		Scene newscene = new Scene(vbox, 100, 100, Color.BLACK);
 		newstage.setScene(newscene);
 		newstage.show();
+		hearts = heart.getLife();
 		
 		b1.setOnAction(e -> {
 			window.close();
@@ -33,7 +35,8 @@ public class MenuBox{
 			window.close();
 			newstage.close();
 			try {
-				Process P = Runtime.getRuntime().exec("java BossFight");
+				System.out.println("java BossFight" + hearts);
+				Process P = Runtime.getRuntime().exec("java BossFight " + hearts);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

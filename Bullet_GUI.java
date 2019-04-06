@@ -73,7 +73,7 @@ public class Bullet_GUI extends Bullet {
 		}
 	}
 
-	public void shootAvatar(ArrayList<Enemy_GUI> enemy_list, Pane pane, Avatar avatar) {
+	public void shootAvatar(ArrayList<Enemy_GUI> enemy_list, Pane pane, Avatar_GUI avatar) {
 		for (int i = 0; i <5; i++) {
 		if (!iv.getBoundsInParent().intersects(enemy_list.get(i).getIV().getBoundsInParent()) 
 				&& iv.getTranslateY() > -20) {
