@@ -1,41 +1,35 @@
 import javafx.scene.input.KeyCode;
 
-import java.io.DataOutputStream;
-
-public class Enemy {
+public class Boss {
+    final int DELETE_COORD = -1000;
     final int RIGHT_BOUNDS = 540;
     final int BOTTOM_BOUNDS = 740;
-    final int DELETE_COORD = -1000;
-    final double ENEMY_BULLET_SPEED = 0.005;
     private int x_coordinate = 0;
     private int y_coordinate = 0;
     private int movement = 7;
-    private boolean shoot = false;
-    private boolean dead = false;
+    private boolean does_Boss_Shoot = false;
+    private boolean is_Boss_Dead = false;
+    private int hp = 5;
 
-    public Enemy(int x, int y) {
+    public Boss(int x, int y) {
         setX_coordinate((int) (Math.random() * x));
         setY_coordinate((int) (Math.random() * y));
     }
 
-    public boolean getDead() {
-        return dead;
-    }
-
-    public void setDead(boolean dead) {
-        this.dead = dead;
+    public boolean isBossDead() {
+        return is_Boss_Dead;
     }
 
     public int getX_coordinate() {
         return x_coordinate;
     }
 
-    public boolean getShoot() {
-        return shoot;
+    public boolean doesBossShoot() {
+        return does_Boss_Shoot;
     }
 
-    public void setShoot(boolean shoot) {
-        this.shoot = shoot;
+    public void setBossShoot(boolean shoot) {
+        this.does_Boss_Shoot = shoot;
     }
 
     public void setX_coordinate(int x_coordinate) {
@@ -82,6 +76,7 @@ public class Enemy {
         }
     }
 
+
     public void moveRan() {
         double r = Math.random();
         if (r < 0.10 && getX_coordinate() > 0) {
@@ -102,15 +97,23 @@ public class Enemy {
     }
 
     public boolean enemyShoot() {
-        if (Math.random() < ENEMY_BULLET_SPEED && !this.getDead()) {
+        if (Math.random() < 0.05 && !this.isBossDead()) {
 
-            setShoot(true);
+            setBossShoot(true);
 
         } else {
-            setShoot(false);
+            setBossShoot(false);
         }
 
-        return getShoot();
+        return doesBossShoot();
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
     }
 
 
