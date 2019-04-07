@@ -7,20 +7,21 @@ public class Avatar_GUI extends Avatar {
 	ImageView iv = new ImageView();
 	private int width;
 	private int height;
-	
-	public Avatar_GUI(Image image, int w, int h, int x, int y) {
-		super (x,y);
+
+	public Avatar_GUI(Image image, int width, int height, int xCood, int yCood) {
+		super(xCood, yCood);
 		setImage(image);
 		iv.setImage(getImage());
 		iv.setX(getX_coordinate());
 		iv.setY(getY_coordinate());
-		setWidth(w);
-		setHeight(h);
+		setWidth(width);
+		setHeight(height);
 	}
 
 	public ImageView getIV() {
 		return iv;
 	}
+
 	public Image getImage() {
 		return image;
 	}
@@ -46,12 +47,36 @@ public class Avatar_GUI extends Avatar {
 		iv.setFitHeight(height);
 		this.height = height;
 	}
-	
+
+
 	public void movement(KeyCode code) {
-		super.movement(code);
+		switch (code) {
+
+			case A:
+				moveLeft();
+				setShoots(false);
+				break;
+			case D:
+				moveRight();
+				setShoots(false);
+				break;
+			case W:
+				moveUp();
+				setShoots(false);
+				break;
+			case S:
+				moveDown();
+				setShoots(false);
+				break;
+			case SPACE:
+				setShoots(true);
+				break;
+
+		}
 		iv.setX(getX_coordinate());
-		iv.setY(getY_coordinate()); 
+		iv.setY(getY_coordinate());
 	}
+
 	public void delete() {
 		super.delete();
 		setWidth(1);
@@ -60,5 +85,5 @@ public class Avatar_GUI extends Avatar {
 		iv.setY(getY_coordinate());
 	}
 
-	
+
 }

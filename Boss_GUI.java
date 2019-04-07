@@ -8,20 +8,21 @@ public class Boss_GUI extends Boss {
 	ImageView iv = new ImageView();
 	private int width;
 	private int height;
-	
-	public Boss_GUI(Image image, int w, int h, int x, int y) {
-		super (x,y);
+
+	public Boss_GUI(Image image, int width, int height, int xCoord, int yCoord) {
+		super(xCoord, yCoord);
 		setImage(image);
 		iv.setImage(getImage());
 		iv.setX(getX_coordinate());
 		iv.setY(getY_coordinate());
-		setWidth(w);
-		setHeight(h);
+		setWidth(width);
+		setHeight(height);
 	}
 
-	public ImageView getIV() {
+	public ImageView getImageView() {
 		return iv;
 	}
+
 	public Image getImage() {
 		return image;
 	}
@@ -47,17 +48,13 @@ public class Boss_GUI extends Boss {
 		iv.setFitHeight(height);
 		this.height = height;
 	}
-	
-	public void movement(KeyCode code) {
-		super.movement(code);
-		iv.setX(getX_coordinate());
-		iv.setY(getY_coordinate());
-	}
+
 	public void moveRan() {
 		super.moveRan();
 		iv.setX(getX_coordinate());
 		iv.setY(getY_coordinate());
 	}
+
 	public void delete() {
 		super.delete();
 		setWidth(1);

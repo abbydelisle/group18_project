@@ -8,20 +8,21 @@ public class Enemy_GUI extends Enemy {
 	ImageView iv = new ImageView();
 	private int width;
 	private int height;
-	
-	public Enemy_GUI(Image image, int w, int h, int x, int y) {
-		super (x,y);
+
+	public Enemy_GUI(Image image, int width, int height, int x_coordinate, int y_coordinate) {
+		super(x_coordinate, y_coordinate);
 		setImage(image);
 		iv.setImage(getImage());
 		iv.setX(getX_coordinate());
 		iv.setY(getY_coordinate());
-		setWidth(w);
-		setHeight(h);
+		setWidth(width);
+		setHeight(height);
 	}
 
 	public ImageView getIV() {
 		return iv;
 	}
+
 	public Image getImage() {
 		return image;
 	}
@@ -47,17 +48,13 @@ public class Enemy_GUI extends Enemy {
 		iv.setFitHeight(height);
 		this.height = height;
 	}
-	
-	public void movement(KeyCode code) {
-		super.movement(code);
-		iv.setX(getX_coordinate());
-		iv.setY(getY_coordinate());
-	}
+
 	public void moveRan() {
 		super.moveRan();
 		iv.setX(getX_coordinate());
 		iv.setY(getY_coordinate());
 	}
+
 	public void delete() {
 		super.delete();
 		setWidth(1);
