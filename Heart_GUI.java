@@ -19,10 +19,10 @@ public class Heart_GUI extends Heart {
         super.removeHeartList();
         super.createHeartList(j);
         for (int i = 0; i < super.getHeartList().size(); i++) {
-            int x = super.getHeartList().get(i);
+            int xCoord = super.getHeartList().get(i);
             ImageView heart = new ImageView();
             heart.setImage(getImg());
-            heart.setX(x);
+            heart.setX(xCoord);
             heart.setY(super.getY());
             heart.setFitHeight(HEART_WIDTH_AND_HEIGHT);
             heart.setFitWidth(HEART_WIDTH_AND_HEIGHT);

@@ -46,21 +46,8 @@ public class Bullet {
         this.movement = movement;
     }
 
-    public void moveLeft() {
-        if (getX_coordinate() > 0) {
-            setX_coordinate(getX_coordinate() - getMovement());
-        }
-    }
-
-    public void moveRight() {
-        if (getX_coordinate() < RIGHT_BOUNDS) {
-            setX_coordinate(getX_coordinate() + getMovement());
-        }
-    }
-
     public void moveUp() {
         setY_coordinate(getY_coordinate() - getMovement());
-
     }
 
     public void moveDown() {
@@ -70,10 +57,10 @@ public class Bullet {
     }
 
     public void bossPattern() {
-        int yCoord = getY_coordinate() + 3;  //3 and 50 are magic numbers that we used to make the bullet pattern
-        int xCoord = (int) ((Math.cos(yCoord)) * 50);
-        setX_coordinate(xCoord + getX_coordinate());
-        setY_coordinate(yCoord);
+        int y_coordinate = getY_coordinate() + 3;  //3 and 50 are magic numbers that we used to make the bullet pattern
+        int x_coordinate = (int) ((Math.cos(y_coordinate)) * 50);
+        setX_coordinate(x_coordinate + getX_coordinate());
+        setY_coordinate(y_coordinate);
 
     }
 

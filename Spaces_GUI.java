@@ -1,20 +1,20 @@
 import java.util.ArrayList;
-
 import javafx.scene.input.KeyCode;
-
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
 
 public class Spaces_GUI extends Application {
     final int NUM_ENEMIES = 5;
     Stage stage;
+    private Text score = new Text (10, 50, "HighScore: " + readScore.read());
     private String quit = "Quit";
     static Scene scene;
     private boolean avatar_dead = false;
@@ -48,10 +48,14 @@ public class Spaces_GUI extends Application {
     @Override
     public void start(Stage stage) {
         this.stage = stage;
+        score.setStyle("-fx-font-weight: bold");
+        score.setFont(Font.font ("Verdana", 20));
+        score.setFill(Color.YELLOW);
         stage.setTitle("Space Invaders");
         pane.getChildren().addAll(background_Iv);
         pane.getChildren().add(avatar.getIV());
         pane.getChildren().addAll(enemy1.getIV(), enemy2.getIV(), enemy3.getIV(), enemy4.getIV(), enemy5.getIV());
+        pane.getChildren().add(score);
         AnimationTimer enemyTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -104,9 +108,9 @@ public class Spaces_GUI extends Application {
 
     public void endGame() {
         if (quit.equals("Won")) {
-            menuBox.Win(stage);
+            menuBox.Win(stage, heart);
         } else if (quit.equals("Won Boss")) {
-            menuBox.WinBoss(stage);
+            menuBox.WinBoss(stage, heart);
         }
 
         else if (quit.equals("Lost")) {
@@ -136,12 +140,14 @@ public class Spaces_GUI extends Application {
                     avatar.delete();
                     avatar_dead = true;
                 }
-                if (avatar.getEnemies_killed() == 5) {
+                if (avatar.getEnemies_killed() == NUM_ENEMIES) {
                     enemy_dead = true;
+                    stop();
                 }
             }
         };
         bulletTimer.start();
+
 
     }
 

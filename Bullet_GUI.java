@@ -89,7 +89,6 @@ public class Bullet_GUI extends Bullet {
 				enemy_list.get(i).setDead(true);
 				this.delete();
 				avatar.setEnemies_killed(avatar.getEnemies_killed() + 1);
-
 			}
 		}
 

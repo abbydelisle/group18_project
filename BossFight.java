@@ -13,12 +13,21 @@ public class BossFight extends Spaces_GUI {
 	boolean boss_dead = false;
 	String quit = "Quit";
 	Pane pane = new Pane();
+    public static String hearts_Transferred;
 	Image boss_image = new Image("boss.png");
 	Boss_GUI boss = new Boss_GUI(boss_image, 100, 100, 400, 500);
 	Heart_GUI boss_heart = new Heart_GUI(heart_image);
 
+    public static void setHearts(String num_hearts) {
+        hearts_Transferred = num_hearts;
+    }
+    public String getHearts() {
+        return hearts_Transferred;
+    }
+
 	public static void main(String[] args) {
-		launch(args);
+        setHearts(args[0]);
+        launch(args);
 	}
 
 	@Override
@@ -49,6 +58,7 @@ public class BossFight extends Spaces_GUI {
 			}
 		};
 		eTimer.start();
+        heart.setLife(Integer.parseInt(getHearts()));
 		heart.addHearts(pane, 10);
 		boss_heart.addHearts(pane, 400);
 		scene = new Scene(pane, 600, 800, Color.BLACK);
@@ -70,9 +80,9 @@ public class BossFight extends Spaces_GUI {
 
 	public void endGame() {
 		if (quit.equals("Won")) {
-			menuBox.Win(stage);
+			menuBox.Win(stage, heart);
 		} else if (quit.equals("Won Boss")) {
-			menuBox.WinBoss(stage);
+			menuBox.WinBoss(stage,heart);
 		}
 
 		// if avatar is dead; quit condition '2'
@@ -89,7 +99,7 @@ public class BossFight extends Spaces_GUI {
 
 	public void shoot(String type, Avatar_GUI avatar, Boss_GUI boss) {
 		Boss_Bullet_GUI bullet;
-		if (type == "avatar") {
+		if (type.equals("avatar")) {
 			bullet = new Boss_Bullet_GUI(bullet_image, 60, 35, avatar.getX_coordinate(), avatar.getY_coordinate(), type);
 		} else {
 			bullet = new Boss_Bullet_GUI(bullet_Enemy_Image, 50, 35, boss.getX_coordinate(), boss.getY_coordinate() + 30, type);
@@ -106,6 +116,7 @@ public class BossFight extends Spaces_GUI {
 				}
 				if (boss_heart.getLife() == 0) {
 					boss_dead = true;
+					stop();
 				}
 			}
 		};

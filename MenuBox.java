@@ -1,5 +1,4 @@
 import java.io.IOException;
-
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,8 +13,9 @@ public class MenuBox {
     Text won = new Text(10, 10, "You Won!");
     Text lost = new Text(10, 10, "You Lost!");
     VBox vbox = new VBox();
+    int hearts_Transfered = 0;
 
-    public void Win(Stage window) {
+    public void Win(Stage window, Heart_GUI heart) {
         vbox.getChildren().add(won);
         vbox.getChildren().add(b1);
         vbox.getChildren().add(b2);
@@ -24,6 +24,7 @@ public class MenuBox {
         Scene newscene = new Scene(vbox, 100, 100, Color.BLACK);
         newstage.setScene(newscene);
         newstage.show();
+        hearts_Transfered = heart.getLife();
 
         b1.setOnAction(e -> {
             window.close();
@@ -33,7 +34,8 @@ public class MenuBox {
             window.close();
             newstage.close();
             try {
-                Process P = Runtime.getRuntime().exec("java BossFight");
+                System.out.println("java BossFight" + hearts_Transfered);
+                Process P = Runtime.getRuntime().exec("java BossFight"+ hearts_Transfered);
             } catch (IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
@@ -42,8 +44,12 @@ public class MenuBox {
 
     }
 
-    public void WinBoss(Stage window) {
+    public void WinBoss(Stage window, Heart_GUI heart) {
+        int newScore = (heart.getLife())*100;
+        Text score_Text = new Text(10,10, "Score: " + newScore);
+        readScore.setScore(newScore);
         vbox.getChildren().add(won);
+        vbox.getChildren().add(score_Text);
         vbox.getChildren().add(b1);
         vbox.setAlignment(Pos.CENTER);
         Stage newstage = new Stage();

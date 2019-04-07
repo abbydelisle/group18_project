@@ -69,25 +69,6 @@ public class Boss_Bullet {
         }
     }
 
-    public void movement(KeyCode code) {
-        switch (code) {
-            case A:
-                moveLeft();
-                break;
-            case D:
-                moveRight();
-                break;
-            case W:
-                moveUp();
-                break;
-            case S:
-                moveDown();
-                break;
-            case SPACE:
-                break;
-        }
-    }
-
     public void delete() {
         setX_coordinate(DELETE_COORD);
         setY_coordinate(DELETE_COORD);
