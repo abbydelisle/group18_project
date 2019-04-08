@@ -15,7 +15,7 @@ public class Avatar {
 		setX_coordinate(x_coordinate);
 		setY_coordinate(y_coordinate);
 	}
-
+	
 	public int getEnemies_killed() {
 		return enemies_killed;
 	}

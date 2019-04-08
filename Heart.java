@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 public class Heart {
     private int life = 5;
     private int y = 10;
