@@ -1,10 +1,9 @@
-import javafx.scene.input.KeyCode;
-
 public class Bullet {
     final int RIGHT_BOUNDS = 540;
     final int BOTTOM_BOUNDS = 800;
     final int DELETE_COORD = -300;
     private int life = 5;
+    private char name = '|';
     private int x_coordinate = 0;
     private int y_coordinate = 0;
     private int movement = 1;
@@ -21,6 +20,13 @@ public class Bullet {
     public void setLife(int life) {
         this.life = life;
     }
+    public void setName(char aChar) {
+		this.name = aChar;
+	}
+	public char getName() {
+		return name;
+	}
+
 
     public int getX_coordinate() {
         return x_coordinate;

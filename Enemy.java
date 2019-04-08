@@ -1,11 +1,8 @@
-import javafx.scene.input.KeyCode;
-
-import java.io.DataOutputStream;
-
 public class Enemy {
     final int RIGHT_BOUNDS = 540;
     final int BOTTOM_BOUNDS = 740;
     final int DELETE_COORD = -1000;
+	private char name = 'E';
     final double ENEMY_BULLET_SPEED = 0.005;
     private int x_coordinate = 0;
     private int y_coordinate = 0;
@@ -21,6 +18,12 @@ public class Enemy {
     public boolean getDead() {
         return dead;
     }
+    public void setName(char aChar) {
+		this.name = aChar;
+	}
+	public char getName() {
+		return name;
+	}
 
     public void setDead(boolean dead) {
         this.dead = dead;

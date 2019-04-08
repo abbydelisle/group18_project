@@ -1,10 +1,9 @@
-import javafx.scene.input.KeyCode;
-
 public class Avatar {
 	final int DELETE_COORD = -1000;
 	final int RIGHT_BOUNDS = 540;
 	final int BOTTOM_BOUNDS = 740;
 	private int life = 5;
+	private char name = 'S';
 	private int x_coordinate = 0;
 	private int y_coordinate = 0;
 	private int movement = 10;
@@ -16,6 +15,18 @@ public class Avatar {
 	public Avatar(int x_coordinate, int y_coordinate) {
 		setX_coordinate(x_coordinate);
 		setY_coordinate(y_coordinate);
+	}
+
+	public Avatar (int x, int y, char aChar) {
+		setX_coordinate(x);
+		setY_coordinate(y);
+		setName(aChar);
+	}
+	public void setName(char aChar) {
+		this.name = aChar;
+	}
+	public char getName() {
+		return name;
 	}
 
 	public int getEnemies_killed() {
@@ -73,7 +84,7 @@ public class Avatar {
 	}
 
 	public void moveLeft() {
-		if (getX_coordinate() > 0) {
+		if (getX_coordinate()> 0) {
 			setX_coordinate(getX_coordinate() - getMovement());
 		}
 	}
