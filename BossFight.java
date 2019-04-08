@@ -1,179 +1,169 @@
-import javafx.application.Application;
-import java.awt.*;
-import java.awt.Label;
-import java.awt.event.KeyEvent;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-//import javafx.scene.control.Label;
-import javafx.stage.Stage;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.scene.text.Text;
-import javafx.scene.control.Button;
-import javafx.geometry.*;
 import javafx.animation.AnimationTimer;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.scene.input.KeyCode;
-import java.util.*;
-import java.util.stream.*;
-import java.util.function.*;
-import java.util.ArrayList;
-import javafx.scene.control.Button;
-import javafx.application.Platform;
-import java.io.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
-public class BossFight extends Spaces{
-
-  Stage window;
+public class BossFight extends Application {
+	Stage stage;
 	Scene scene;
 	boolean avatar_dead = false;
-  boolean boss_dead = false;
-	double t = 0;
-  Pane layout = new Pane();
-  Image image = new Image("avatar.png");
-  Image image3 = new Image("heart.png");
-  Heart heart = new Heart();
-  Avatar avatar = new Avatar(300, 500, 60, 60, "avatar", image);
-  Image imageBoss = new Image("boss.png");
-  ArrayList<Character> numli = new ArrayList<Character>(5);
-  //ArrayList<String> bossHp = new ArrayList<String>(50);
-  //String joined = String.join("",bossHp);
-  Boss boss = new Boss(150,70, 300, 200, "boss", imageBoss);
-  //Text t = new Text(200,400,joined);
+	boolean boss_dead = false;
+	String quit = "Quit";
+	static Image heart_image;
+    static Image avatar_image;
+	static Image background;
+	static ImageView background_Iv;
+    static Avatar_GUI avatar;
+    static Heart_GUI heart;
+    static Image bullet_image;
+    static Image bullet_Enemy_Image;
 
 
-  public static void main(String[] args){
-    launch(args);
-  }
-  @Override
-	public void start(Stage primaryStage) throws Exception{
-    /*
-    btn.setOnAction(e -> {
-      if(menu("..", "exit?")){
-        System.exit(0);
-      }
-    });
-    */
-		window = primaryStage;
-		window.setTitle("Boss fight");
-    //https://stackoverflow.com/questions/22841000/how-to-change-the-color-of-pane-in-javafx
-    layout.setStyle("-fx-background-color:black;");
-		layout.getChildren().add(avatar);
-    //btn.relocate(560,8);
-    //layout.getChildren().add(btn);
+	Pane pane = new Pane();
+    public static String hearts_Transferred;
+	Image boss_image;
+	Boss_GUI boss;
+	Heart_GUI boss_heart;
+	MenuBox menuBox;
 
-		layout.getChildren().addAll(boss);
+    public static void setHearts(String num_hearts) {
+        hearts_Transferred = num_hearts;
+    }
+    public String getHearts() {
+        return hearts_Transferred;
+    }
 
-		/*
-    layout2.setStyle("-fx-background-color:black;");
-    layout2.getChildren().addAll(btn);
-    btn.setOnAction(ev -> {
-      menu("Game Over", "exit?");
-    });
-    //layout2.setAlignment(Pos.CENTER);
-		*/
-
-		AnimationTimer bossTimer = new AnimationTimer(){
-
-
-	@Override
-	public void handle(long now){
-
-		//alien.setEnemyList(alien, alien2, alien3, alien4, alien5);
-		//enemyList = alien.getEnemyList();
-		if (avatar_dead) {
-			stop();
-			//quit = 2;
-			MenuBox.display("Menu", "You Lost!", "lose");
-			//menu("Menu","You lost!");
-
-
-		}
-		if (boss_dead) {
-			stop();
-			//quit = 1;
-			MenuBox.display("Menu", "You Won!", "win");
-
-		}
-
-
-    //shoot(boss, Color.PINK);
-
-
-      }
-    };
-
-    	bossTimer.start();
-
-    	scene = new Scene(layout, 600, 800);
-      //scene2 = new Scene(layout2, 300, 400);
-    	scene.setOnKeyPressed(e -> {
-
-				if (e.getCode() == KeyCode.Q) {
-    		//quit = 0;
-				MenuBox.display("Menu", "Game Menu", "Q");
-
-    	}
-
-    		else if (avatar.movement(e.getCode()) == true){
-    			shoot(avatar,Color.YELLOW);
-    		}
-
-    });
-
-
-    heart.numHeart(numli, avatar, image3);
-    //Label barcode = new Label("dfsf");
-    //barcode.relocate(100,760);
-    layout.getChildren().addAll(numli);
-    boss.numHp();
-    //System.out.println(boss.shp(bossHp));
-    System.out.println(boss.shp());
-    //boss.thp();
-
-    boss.setHp();
-    layout.getChildren().add(boss.t);
-
-    window.setScene(scene);
-    window.show();
+	public static void main(String[] args) {
+        setHearts(args[0]);
+        launch(args);
 	}
 
-  public void shoot(Character p, Color c){
-    Bullet bullet = new Bullet((int) p.getX() + 20, (int) p.getY(), 5, 20, p.type+"Bullet", c);
-    layout.getChildren().add(bullet);
+	@Override
+	public void start(Stage stage) {
+		boolean images_exist = true;
+    	try {
+    		createImages();
+    	} catch (Exception e) {
+    		images_exist = false;
+    	}
+    	if (images_exist) {
+    		boss_heart = new Heart_GUI(heart_image);
+    		boss = new Boss_GUI(boss_image, 100, 100, 400, 500);
+		heart = new Heart_GUI(heart_image);
+		menuBox = new MenuBox();
+		avatar = new Avatar_GUI(avatar_image, 60, 60, 265, 700);
+		this.stage = stage;
+		stage.setTitle("Space Invaders Boss Fight");
+		pane.getChildren().addAll(background_Iv);
+		pane.getChildren().add(avatar.getIV());
+		pane.getChildren().add(boss.getImageView());
+		AnimationTimer eTimer = new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+				boss.moveRan();
+				if (avatar_dead) {
+					stop();
+					quit = "Lost";
+					endGame();
+				}
+				if (boss_dead) {
+					stop();
+					quit = "Won Boss";
+					endGame();
+				}
+				if (boss.enemyShoot()) {
+					shoot("enemy" + 1, avatar, boss);
+				}
 
-    AnimationTimer bulletTimer = new AnimationTimer(){
-
-		@Override
-		public void handle(long now){
-			int idk = bullet.bossShooter(avatar, boss, layout, heart, numli, image3);
-
-			if(idk == 2) {
-				stop();
 			}
-
-			if (avatar.getLife() == 0) {
-				avatar.delete();
-				stop();
-				avatar_dead = true;
-
+		};
+		eTimer.start();
+        heart.setLife(Integer.parseInt(getHearts()));
+		heart.addHearts(pane, 10);
+		boss_heart.addHearts(pane, 400);
+		scene = new Scene(pane, 600, 800, Color.BLACK);
+		scene.setOnKeyPressed(e -> {
+			avatar.movement(e.getCode());
+			if (e.getCode() == KeyCode.Q) {
+				quit = "Quit";
+				endGame();
 			}
-			if (boss.getBLife() == 0) {
-				boss_dead = true;
+			if (avatar.getShoots()) {
+				shoot("avatar", avatar, boss);
 			}
-
-
+		});
+		stage.setScene(scene);
+		stage.show();
 		}
-    };
-    bulletTimer.start();
+    	else {
+    		Platform.exit();
+    	}
 
 
-  }
+	}
 
+	public void endGame() {
+		if (quit.equals("Won")) {
+			menuBox.Win(stage, heart);
+		} else if (quit.equals("Won Boss")) {
+			menuBox.WinBoss(stage,heart);
+		}
+
+		// if avatar is dead; quit condition '2'
+		else if (quit.equals("Lost")) {
+			menuBox.Lose(stage);
+		}
+
+		// if 'Q' is pressed; quit condition '0'
+		else {
+			menuBox.Quit(stage);
+		}
+
+	}
+    public void createImages() {
+    	boss_image = new Image("boss.png");
+        avatar_image = new Image("avatar.png");  
+        //https://wallimpex.com/super-mario-galaxy-backgrounds/5510708.html
+        background = new Image("background.jpg");
+        heart_image = new Image("heart.png");
+        bullet_image = new Image("mario1.gif");
+        bullet_Enemy_Image = new Image("luigi1.gif");
+        background_Iv = new ImageView(background);
+        
+
+    }
+
+
+	public void shoot(String type, Avatar_GUI avatar, Boss_GUI boss) {
+		Boss_Bullet_GUI bullet;
+		if (type.equals("avatar")) {
+			bullet = new Boss_Bullet_GUI(bullet_image, 60, 35, avatar.getX_coordinate(), avatar.getY_coordinate(), type);
+		} else {
+			bullet = new Boss_Bullet_GUI(bullet_Enemy_Image, 50, 35, boss.getX_coordinate(), boss.getY_coordinate() + 30, type);
+		}
+
+		pane.getChildren().add(bullet.getImageView());
+		AnimationTimer bulletTimer = new AnimationTimer() {
+			@Override
+			public void handle(long now) {
+				bullet.shoot(boss, pane, avatar, heart, boss_heart, this);
+				if (heart.getLife() == 0) {
+					avatar.delete();
+					avatar_dead = true;
+				}
+				if (boss_heart.getLife() == 0) {
+					boss_dead = true;
+					stop();
+				}
+			}
+		};
+		bulletTimer.start();
+
+	}
 }

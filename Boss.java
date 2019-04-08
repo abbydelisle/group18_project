@@ -1,101 +1,118 @@
-import java.util.ArrayList;
-import javafx.scene.text.Text;
-import javafx.scene.paint.Color;
-import javafx.scene.layout.*;
+public class Boss {
+    final int DELETE_COORD = -1000;
+    final int RIGHT_BOUNDS = 540;
+    final int BOTTOM_BOUNDS = 740;
+    private int x_coordinate = 0;
+    private int y_coordinate = 0;
+    private int movement = 7;
+    private boolean does_Boss_Shoot = false;
+    private boolean is_Boss_Dead = false;
+    private int hp = 5;
 
-import javafx.scene.image.Image;
-
-public class Boss extends Character{
-  private int bLife = 123;
-
-  ArrayList<String> bossHp = new ArrayList<String>();
-  //Text t = new Text();
-  //Text t = new Text(20,400,String.join("",bossHp));
-  //String joined = String.join("",bossHp);
-  //Text t;
-  //Text t = new Text(20,400,);
-  Text t;
-  //Text t = new Text(20,400,"22"+shp());
-  //Text t = new Text(20,400,"dfsdfdsfsfdfs");
-  //Text ts = t;
-  //Text t = new Text();
-
-
-
-  //Text t;
-
-
-
-
-  public Boss (int x, int y, int w, int h, String t, Image image){
-    super(x, y, w, h, t, image);
-  }
-
-
-
-  public void numHp(){
-
-    for (int i = 0; i<bLife; i++){
-      bossHp.add("|");
+    public Boss(int x, int y) {
+        setX_coordinate((int) (Math.random() * x));
+        setY_coordinate((int) (Math.random() * y));
     }
-    //Text t = new Text(20,400,"22"+shp());
 
-    //joined = String.join("",bossHp);
-    //String sBossHp = String.join("",bossHp);
-  }
-
-  public void removeHp(){
-    bossHp.removeAll(bossHp);
-
-    for (int i = 0; i<bLife; i++){
-      bossHp.add("|");
+    public boolean isBossDead() {
+        return is_Boss_Dead;
     }
-    //Text t = new Text(20,400,"22"+shp());
 
-    //joined = String.join("",bossHp);
-    //String sBossHp = String.join("",bossHp);
+    public int getX_coordinate() {
+        return x_coordinate;
+    }
 
-  }
-  public int getBLife() {
-		return bLife;
-	}
-	public void loseBLife() {
-		bLife -= 1;
-	}
-  public String shp(){
-    //Text t = new Text(400,400,String.join("",bossHp));
-    //Text t = new Text(200,400,"||||||||||||||||||||||||||||||");
-    return String.join("",bossHp);
-  }
-/*
-  public void rthp(){
-    layout.getChildren().remove(t);
-    //move to bossfight
-    Text t = new Text(200,400,String.join("",bossHp));
-    t.setStyle("-fx-font: 30 arial;");
-    //t.setFont(20);
-    t.setFill(Color.RED);
-    layout.getChildren().add(t);
+    public boolean doesBossShoot() {
+        return does_Boss_Shoot;
+    }
 
-  }
-  */
-  public void setHp(){
-    //layout.getChildren().remove(t);
-    //move to bossfight
-    //Text r = t;
-    Text h = new Text(10,55,String.join("",bossHp));
+    public void setBossShoot(boolean shoot) {
+        this.does_Boss_Shoot = shoot;
+    }
 
-    h.setStyle("-fx-font: 18 arial;");
-    h.setFill(Color.GREY);
+    public void setX_coordinate(int x_coordinate) {
+        this.x_coordinate = x_coordinate;
+    }
 
-    //System.out.println("b");
-    this.t = h;
-  }
-  public Text getHp(){
+    public int getY_coordinate() {
+        return y_coordinate;
+    }
 
-    return t;
-  }
+    public void setY_coordinate(int y_coordinate) {
+        this.y_coordinate = y_coordinate;
+    }
 
+    public int getMovement() {
+        return movement;
+    }
+
+    public void setMovement(int movement) {
+        this.movement = movement;
+    }
+
+    public void moveLeft() {
+        if (getX_coordinate() > 0) {
+            setX_coordinate(getX_coordinate() - getMovement());
+        }
+    }
+
+    public void moveRight() {
+        if (getX_coordinate() < RIGHT_BOUNDS) {
+            setX_coordinate(getX_coordinate() + getMovement());
+        }
+    }
+
+    public void moveUp() {
+        if (getY_coordinate() > 0) {
+            setY_coordinate(getY_coordinate() - getMovement());
+        }
+    }
+
+    public void moveDown() {
+        if (getY_coordinate() < BOTTOM_BOUNDS) {
+            setY_coordinate(getY_coordinate() + getMovement());
+        }
+    }
+
+
+    public void moveRan() {
+        double r = Math.random();
+        if (r < 0.10 && getX_coordinate() > 0) {
+            setX_coordinate(getX_coordinate() - getMovement());
+        } else if (r < 0.20 && getX_coordinate() < 600) {
+            setX_coordinate(getX_coordinate() + getMovement());
+        } else if (r < 0.30 && getY_coordinate() > 0) {
+            setY_coordinate(getY_coordinate() - getMovement());
+        } else if (r < 0.40 && getY_coordinate() < 500) {
+            setY_coordinate(getY_coordinate() + getMovement());
+        }
+    }
+
+    public void delete() {
+        setX_coordinate(DELETE_COORD);
+        setY_coordinate(DELETE_COORD);
+
+    }
+
+    public boolean enemyShoot() {
+        if (Math.random() < 0.05 && !this.isBossDead()) {
+
+            setBossShoot(true);
+
+        } else {
+            setBossShoot(false);
+        }
+
+        return doesBossShoot();
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
 
 
 }

@@ -1,153 +1,69 @@
-import java.util.ArrayList;
+public class Bullet {
+    final int RIGHT_BOUNDS = 540;
+    final int BOTTOM_BOUNDS = 800;
+    final int DELETE_COORD = -300;
+    private int life = 5;
+    private int x_coordinate = 0;
+    private int y_coordinate = 0;
+    private int movement = 1;
 
-import javafx.animation.AnimationTimer;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.geometry.*;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+    public Bullet(int x_coordinate, int y_coordinate) {
+        setX_coordinate(x_coordinate);
+        setY_coordinate(y_coordinate);
+    }
 
-public class Bullet extends Rectangle{
+    public int getLife() {
+        return life;
+    }
 
-	private String type;
+    public void setLife(int life) {
+        this.life = life;
+    }
 
-	// Bullet
-	public Bullet(int x, int y, int w, int h, String t, Color color){
-		super(w, h, color);
-		this.type = t;
-		setTranslateX(x);
-		setTranslateY(y);
-	}
+    public int getX_coordinate() {
+        return x_coordinate;
+    }
 
-	public void moveUp(){
-		setTranslateY(getTranslateY() - 5);
-	}
+    public void setX_coordinate(int x_coordinate) {
+        this.x_coordinate = x_coordinate;
+    }
 
-	public void moveDown(){
-		setTranslateY(getTranslateY() + 3);
-	}
+    public int getY_coordinate() {
+        return y_coordinate;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
-	public String getType() {
-		return type;
-	}
-	public int shooter (Avatar avatar, ArrayList<Enemy> enemyList, Pane layout, Heart heart, ArrayList<Character>numli, Image image3) {
-		int ret = 0;
-		for (int i = 0; i < 5; i++) {
-			if (this.getType().equals("avatarBullet")){
-				if (!this.getBoundsInParent().intersects(enemyList.get(i).getBoundsInParent()) && this.getTranslateY() > -20) {
-					this.moveUp();
-				}
-				else if (this.getBoundsInParent().intersects(enemyList.get(i).getBoundsInParent()) ){
-					enemyList.get(i).dead = true;
-					layout.getChildren().remove(enemyList.get(i));
-					layout.getChildren().remove(this);
-					enemyList.get(i).delete();
-					avatar.setE_killed(avatar.getE_killed() + 1);
-				}
-			}
-			else if (this.getType().equals("enemyBullet") ){
-				int count = 0;
-				if (!this.getBoundsInParent().intersects(avatar.getBoundsInParent()) && this.getTranslateY() < 800){
-					this.moveDown();
-				}
-				else if (this.getBoundsInParent().intersects(avatar.getBoundsInParent())){
-					layout.getChildren().remove(this);
-					//layout.getChildren().remove(avatar);
-					ret = 2;
-				}
-			}
+    public void setY_coordinate(int y_coordinate) {
+        this.y_coordinate = y_coordinate;
+    }
 
-		}
-		if (this.getBoundsInParent().intersects(avatar.getBoundsInParent())){
-			if (avatar.getLife()>0){
-				avatar.loseLife();
-				layout.getChildren().removeAll(numli);
-				heart.removeHeart(numli, avatar, image3);
-				layout.getChildren().addAll(numli);
-				System.out. println(avatar.getLife());
-			}
+    public int getMovement() {
+        return movement;
+    }
 
-	}
+    public void setMovement(int movement) {
+        this.movement = movement;
+    }
 
+    public void moveUp() {
+        setY_coordinate(getY_coordinate() - getMovement());
+    }
 
+    public void moveDown() {
+        if (getY_coordinate() < BOTTOM_BOUNDS) {
+            setY_coordinate(getY_coordinate() + getMovement());
+        }
+    }
 
-		return ret;
-	}
+    public void bossPattern() {
+        int y_coordinate = getY_coordinate() + 3;  //3 and 50 are magic numbers that we used to make the bullet pattern
+        int x_coordinate = (int) ((Math.cos(y_coordinate)) * 50);
+        setX_coordinate(x_coordinate + getX_coordinate());
+        setY_coordinate(y_coordinate);
 
+    }
 
-
-	public int bossShooter (Avatar avatar, Boss boss, Pane layout, Heart heart, ArrayList<Character>numli, Image image3) {
-		int ret = 0;
-		if (this.getType().equals("avatarBullet")){
-			if (!this.getBoundsInParent().intersects(boss.getBoundsInParent()) && this.getTranslateY() > -20) {
-				this.moveUp();
-			}
-			else if (this.getBoundsInParent().intersects(boss.getBoundsInParent()) ) {
-				if (boss.getBLife()>0){
-					layout.getChildren().remove(this);
-					//Text te = boss.thp();
-					//layout.getChildren().removeAll(te);
-					layout.getChildren().remove(boss.t);
-					boss.loseBLife();
-					boss.removeHp();
-					boss.setHp();
-					layout.getChildren().add(boss.t);
-					//Text te = boss.thp();
-
-					//layout.getChildren().add(boss.thp());
-
-					//boss.rthp(layout, t);
-					//Text te = boss.thp();
-					//layout.getChildren().add(te)	;
-					System.out.println(boss.shp());
-
-					ret = 2;
-				}
-
-				//boss.loseBLife();
-				//this = null;
-			}
-		}
-		/*
-		else if (this.getType().equals("bossBullet") ){
-			int count = 0;
-			if (!this.getBoundsInParent().intersects(avatar.getBoundsInParent()) && this.getTranslateY() < 800){
-				this.moveDown();
-			}
-			else if (this.getBoundsInParent().intersects(avatar.getBoundsInParent())){
-				layout.getChildren().remove(this);
-				//layout.getChildren().remove(avatar);
-				ret = 2;
-			}
-		}
-		*/
-		/*
-		if (this.getBoundsInParent().intersects(avatar.getBoundsInParent())){
-			if (avatar.getLife()>0){
-				avatar.loseLife();
-				layout.getChildren().removeAll(numli);
-				heart.removeHeart(numli, avatar, image3);
-				layout.getChildren().addAll(numli);
-				System.out. println(avatar.getLife());
-			}
-
-
-		}
-		*/
-
-		return ret;
-	}
-
-
-
+    public void delete() {
+        setX_coordinate(DELETE_COORD);
+        setY_coordinate(DELETE_COORD);
+    }
 }

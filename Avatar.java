@@ -1,93 +1,103 @@
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
+public class Avatar {
+	final int DELETE_COORD = -1000;
+	final int RIGHT_BOUNDS = 540;
+	final int BOTTOM_BOUNDS = 740;
+	private int life = 5;
+	private int x_coordinate = 0;
+	private int y_coordinate = 0;
+	private int movement = 10;
+	private boolean avatar_hit = false;
+	public boolean shoots = false;
+	public int enemies_killed = 0;
 
-// This class creates and Avatar by extending Character. There are methods
-// which move the Avatar based on input.
-public class Avatar extends Character{
 
-	//Instance Variables
-	private int life = 5; // the number of hearts the Avatar has left
-	private int e_killed = 0; // the number of enemies the Avatar has killed;
+	public Avatar(int x_coordinate, int y_coordinate) {
+		setX_coordinate(x_coordinate);
+		setY_coordinate(y_coordinate);
+	}
 
-	// The only constructor, which creates an Avatar based on the constructor
-	// in Character
-	public Avatar(int x, int y, int w, int h, String t, Image image) {
-		super(x, y, w, h, t, image);
-		}
-	
-	// Getter method for the number of enemies killed
-	public int getE_killed() {
-		return e_killed;
-		}
-	
-	// Getter method for the life
+	public int getEnemies_killed() {
+		return enemies_killed;
+	}
+
+	// what is value??
+	public void setEnemies_killed(int add_Enemies_Killed) {
+		enemies_killed = add_Enemies_Killed;
+	}
+
 	public int getLife() {
 		return life;
-		}
+	}
 
-	// Setting method for the number of enemies killed
-	public void setE_killed(int e_killed) {
-		this.e_killed = e_killed;
-		}
+	public void setLife(int life) {
+		this.life = life;
+	}
 
-	// Method which removes a life from the Avatar
-	public void loseLife() {
-		life -= 1;
-		}
+	public void delete() {
+		setX_coordinate(DELETE_COORD);
+		setY_coordinate(DELETE_COORD);
 
-	//Method for moving the Avatar left
-	public void moveLeft(){
-		if (getX() > 0){
-			setX(getX() - 10);
-			}
+	}
+
+	public int getX_coordinate() {
+		return x_coordinate;
+	}
+
+	public void setX_coordinate(int x_coordinate) {
+		this.x_coordinate = x_coordinate;
+	}
+
+	public int getY_coordinate() {
+		return y_coordinate;
+	}
+
+	public void setY_coordinate(int y_coordinate) {
+		this.y_coordinate = y_coordinate;
+	}
+
+	public int getMovement() {
+		return movement;
+	}
+
+	public boolean getShoots() {
+		return shoots;
+	}
+	public void setShoots(boolean shoots){
+		this.shoots = shoots;
+	}
+
+	public void setMovement(int movement) {
+		this.movement = movement;
+	}
+
+	public void moveLeft() {
+		if (getX_coordinate()> 0) {
+			setX_coordinate(getX_coordinate() - getMovement());
 		}
+	}
+
+	public void moveRight() {
+		if (getX_coordinate() < RIGHT_BOUNDS) {
+			setX_coordinate(getX_coordinate() + getMovement());
+		}
+	}
+
+	public void moveUp() {
+		if (getY_coordinate() > 0) {
+			setY_coordinate(getY_coordinate() - getMovement());
+		}
+	}
+
+	public void moveDown() {
+		if (getY_coordinate() < BOTTOM_BOUNDS) {
+			setY_coordinate(getY_coordinate() + getMovement());
+		}
+	}
+
+	public boolean isAvatar_hit() {
+		return avatar_hit;
+	}
+
+
 	
-	//Method for moving the Avatar Right
-	public void moveRight(){
-		if (getX() < 540){
-			setX(getX() + 10);
-			}
-		}
-	
-	//Method for moving the Avatar Up
-	public void moveUp(){
-		if (getY() > 0){
-			setY(getY() - 10);
-			}
-		}
-
-	//Method for moving the Avatar Down
-	public void moveDown(){
-		if (getY() < 740){
-			setY(getY() + 10);
-			}
-		}
-
-	// Method which takes a KeyCode as a parameter, and uses it 
-	// to call movement methods. It also returns whether or not
-	// the Avatar should shoot, based on input
-	public boolean movement (KeyCode code) {
-		boolean shoot = false;
-   		switch (code){
-		case A:
-			moveLeft();
-			return shoot;
-		case D:
-			moveRight();
-			return shoot;
-
-		case W:
-			moveUp();
-			return shoot;
-		case S:
-			moveDown();
-			return shoot;
-
-		case SPACE:
-			shoot = true;		
-			return shoot;
-		default:
-			return shoot;
-			}
-   		}
 }
