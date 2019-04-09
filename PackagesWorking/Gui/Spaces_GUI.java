@@ -23,7 +23,6 @@ public class Spaces_GUI extends Application {
     private boolean avatar_dead = false;
     private boolean enemy_dead = false;
     static Image avatar_image;
-    //https://wallimpex.com/super-mario-galaxy-backgrounds/5510708.html
     static Image background;
     static Image enemy_image;
     static Image heart_image;
@@ -137,12 +136,17 @@ public class Spaces_GUI extends Application {
 
     }
     public void createImages() {
+        //https://opengameart.org/content/spaceship-set-4-pixel-art-space-ships
         avatar_image = new Image("Gui/avatar.png");  
         //https://wallimpex.com/super-mario-galaxy-backgrounds/5510708.html
         background = new Image("Gui/background.jpg");
+        //https://commons.wikimedia.org/wiki/File:Space_invaders_alien.svg
         enemy_image = new Image("Gui/enemy.png");
+        //https://ya-webdesign.com/explore/video-game-heart-png/
         heart_image = new Image("Gui/heart.png");
+        //https://gfycat.com/stickers/search/mario+64
         bullet_image = new Image("Gui/mario1.gif");
+        //https://aminoapps.com/c/undertale/page/blog/happy-days-with-music-pt-2/rk0S_euvgwrY2GPZWpXxjjVgk8EZlD
         bullet_Enemy_Image = new Image("Gui/luigi1.gif");
         background_Iv = new ImageView(background);
         
