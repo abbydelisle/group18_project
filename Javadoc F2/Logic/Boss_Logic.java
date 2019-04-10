@@ -18,10 +18,12 @@ public class Boss_Logic {
   private int hp = 5;
 
   /**
-   * Creates a Boss_Logic with random x and y coordinates by multiplying a max
+   * This constructor creates a Boss_Logic with random 
+   * x and y coordinates by multiplying a max
    * x and y by a random number between 0 and 1.
-   * @param max_x the bound for the x coordinate.
-   * @param max_y the bound for the y coordinate.
+   * 
+   * @param max_x The bound for the x coordinate.
+   * @param max_y The bound for the y coordinate.
    */
   public Boss_Logic(int max_x, int max_y) {
     setX_coordinate((int) (Math.random() * max_x));
@@ -29,20 +31,17 @@ public class Boss_Logic {
   }
 
   /**
-   * @return x_coordinate which is used to place the Boss_Logic.
+   * This getter method gets the x coordinate of the Boss
+   * 
+   * @return x_coordinate Which is used to place the Boss_Logic.
    */
   public int getX_coordinate() {
     return x_coordinate;
   }
-
+  
   /**
-   * @param x_coordinate the x coord for Boss_Logic.
-   */
-  public void setX_coordinate(int x_coordinate) {
-    this.x_coordinate = x_coordinate;
-  }
-
-  /**
+   * This getter method gets the y coordinate of the Boss
+   * 
    * @return y_coordinate which is used to place the Boss_Logic.
    */
   public int getY_coordinate() {
@@ -50,37 +49,65 @@ public class Boss_Logic {
   }
 
   /**
-   * @param y_coordinate the y coord for Boss_Logic.
+   * This getter method gets the int amount the boss should move
+   * each time
+   *  
+   * @return movement Which is the amount the Boss moves each time.
+   */
+  public int getMovement() {
+    return movement;
+  }
+  
+  /**
+   * This getter method gets the hp of the Boss logic
+   * 
+   * @return hp The number of lives the Boss_Logic has left.
+   */
+  public int getHp() {
+    return hp;
+  }
+  
+  /**
+   * This sets the x coordinate for the boss logic
+   * 
+   * @param x_coordinate The x coord for Boss_Logic.
+   */
+  public void setX_coordinate(int x_coordinate) {
+    this.x_coordinate = x_coordinate;
+  }
+
+  /**
+   * This sets the y coordinate for the boss
+   * 
+   * @param y_coordinate The y coord for Boss_Logic.
    */
   public void setY_coordinate(int y_coordinate) {
     this.y_coordinate = y_coordinate;
   }
 
   /**
-   * @return movement which is the amount the Enemy_Logic moves each time.
-   */
-  public int getMovement() {
-    return movement;
-  }
-
-  /**
-   * @param movement sets a value for how much the Enemy_Logic moves.
+   * This setter method sets the amount the boss will move each time
+   * 
+   * @param movement sets a value for how much the boss moves.
    */
   public void setMovement(int movement) {
     this.movement = movement;
   }
 
   /**
-   * @return hp the number of lives the Boss_Logic has left.
+   * This sets if the boss will shoot or not
+   * 
+   * @param shoot The boolean to set does_boss_shoot to 
    */
-  public int getHp() {
-    return hp;
-  }
-
   public void setBossShoot(boolean shoot) {
     this.does_Boss_Shoot = shoot;
   }
 
+  /**
+   * This method returns if boss should shoot 
+   * 
+   * @return does_Boss_Shoot The boolean for if boss should shoot
+   */
   public boolean doesBossShoot() {
     return does_Boss_Shoot;
   }

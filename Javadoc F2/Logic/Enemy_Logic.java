@@ -34,6 +34,34 @@ public class Enemy_Logic {
   public int getX_coordinate() {
     return x_coordinate;
   }
+  
+  /**
+   * @return y_coordinate which is used to place the Enemy_Logic.
+   */
+  public int getY_coordinate() {
+    return y_coordinate;
+  }
+  
+  /**
+   * @return movement which is the amount the Enemy_Logic moves each time.
+   */
+   public int getMovement() {
+     return movement;
+   }
+   
+   /**
+    * @return dead is true if the Enemy_Logic has been shot, true otherwise.
+    */
+   public boolean getDead() {
+     return dead;
+   }
+   
+   /**
+    * @return shoot is true if the Enemy_Logic should shoot, false otherwise.
+    */
+   public boolean getShoot() {
+     return shoot;
+   }
 
   /**
    * @param x_coordinate the x coord for Enemy_Logic.
@@ -43,25 +71,11 @@ public class Enemy_Logic {
   }
 
   /**
-   * @return y_coordinate which is used to place the Enemy_Logic.
-   */
-  public int getY_coordinate() {
-    return y_coordinate;
-  }
-
-  /**
    *@param y_coordinate the y coord for Enemy_Logic.
    */
   public void setY_coordinate(int y_coordinate) {
     this.y_coordinate = y_coordinate;
     }
-
- /**
-  * @return movement which is the amount the Enemy_Logic moves each time.
-  */
-  public int getMovement() {
-    return movement;
-  }
 
   /**
    * @param movement sets a value for how much the Enemy_Logic moves.
@@ -71,24 +85,10 @@ public class Enemy_Logic {
   }
 
   /**
-   * @return dead is true if the Enemy_Logic has been shot, true otherwise.
-   */
-  public boolean getDead() {
-    return dead;
-  }
-
-  /**
    * @param dead sets whether or not the Enemy_Logic has been shot.
    */
   public void setDead(boolean dead) {
     this.dead = dead;
-  }
-
-  /**
-   * @return shoot is true if the Enemy_Logic should shoot, false otherwise.
-   */
-  public boolean getShoot() {
-    return shoot;
   }
 
   /**

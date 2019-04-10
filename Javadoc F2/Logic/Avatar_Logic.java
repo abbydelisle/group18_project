@@ -19,9 +19,10 @@ public class Avatar_Logic {
 	private boolean shoots = false;
 
 	/**
-	 * Creates an avatar with a location.
-	 * @param x_coordinate the x coord for Avatar_Logic.
-	 * @param y_coordinate the y coord for Avatar_Logic.
+	 * This constructor creates an avatar with a location.
+	 * 
+	 * @param x_coordinate The x coord for Avatar_Logic.
+	 * @param y_coordinate The y coord for Avatar_Logic.
 	 */
 	public Avatar_Logic(int x_coordinate, int y_coordinate) {
 		setX_coordinate(x_coordinate);
@@ -29,71 +30,55 @@ public class Avatar_Logic {
 	}
 
 	/**
-	 * @return x_coordinate which is used to place the Avatar_Logic.
+	 * This getter method returns the x coordinate of the avatar
+	 * 
+	 * @return x_coordinate Which is used to place the Avatar_Logic.
 	 */
 	public int getX_coordinate() {
 		return x_coordinate;
 	}
-
+	
 	/**
-	 * @param x_coordinate the x coord for Avatar_Logic.
-	 */
-	public void setX_coordinate(int x_coordinate) {
-		this.x_coordinate = x_coordinate;
-	}
-
-	/**
-	 * @return y_coordinate which is used to place the Avatar_Logic.
+	 * This getter method returns the y coordinate of the avatar
+	 * 
+	 * @return y_coordinate Which is used to place the Avatar_Logic.
 	 */
 	public int getY_coordinate() {
 		return y_coordinate;
 	}
-
+	
 	/**
-	 * @param y_coordinate the y coord for Avatar_Logic.
-	 */
-	public void setY_coordinate(int y_coordinate) {
-		this.y_coordinate = y_coordinate;
-	}
-
-	/**
-	 * @return movement which is the amount the Avatar_Logic moves each time.
+	 * This getter method gets the int amount the avatar should move
+	 * each time
+	 * 
+	 * @return movement Which is the amount the Avatar_Logic moves each time.
 	 */
 	public int getMovement() {
 		return movement;
 	}
-
+	
 	/**
-	 * @param movement sets how much the Avatar_Logic will move.
-	 */
-	public void setMovement(int movement) {
-		this.movement = movement;
-	}
-
-	/**
-	 * @return enemies_killed the number of enemies the user has killed.
+	 * This getter method gets the number of enemies the avatar has killed
+	 * 
+	 * @return enemies_killed The number of enemies the user has killed.
 	 */
 	public int getEnemies_killed() {
 		return enemies_killed;
 	}
-
+	
 	/**
-	 * @param add_Enemies_Killed used to increase the number of enemies the
-	 * user has killed.
-	 */
-	public void setEnemies_killed(int add_Enemies_Killed) {
-		enemies_killed = add_Enemies_Killed;
-	}
-
-	/**
-	 * @return life the number of lives the Avatar_Logic has remaining.
+	 * This getter method gets the number of lives the avatar has
+	 * 
+	 * @return life The number of lives the Avatar_Logic has remaining.
 	 */
 	public int getLife() {
 		return life;
 	}
 
 	/**
-	 * @return shoots which is true if the Avatar_Logic should continue shooting and
+	 * This getter method gets if the avatar should shoot or not
+	 * 
+	 * @return shoots Which is true if the Avatar_Logic should continue shooting and
 	 * false otherwise.
 	 */
 	public boolean getShoots() {
@@ -101,14 +86,56 @@ public class Avatar_Logic {
 	}
 
 	/**
-	 * @param shoots sets whether or not the ship shoots a bullet.
+	 * This setter method sets the x coordinate of the avatar
+	 * 
+	 * @param x_coordinate The x coord for Avatar_Logic.
+	 */
+	public void setX_coordinate(int x_coordinate) {
+		this.x_coordinate = x_coordinate;
+	}
+
+	/**
+	 * This setter method sets the y coordinate of the avatar
+	 * 
+	 * @param y_coordinate The y coord for Avatar_Logic.
+	 */
+	public void setY_coordinate(int y_coordinate) {
+		this.y_coordinate = y_coordinate;
+	}
+
+	/**
+	 * This setter method sets the amount the avatar will move each time
+	 * 
+	 * @param movement Sets how much the Avatar_Logic will move.
+	 */
+	public void setMovement(int movement) {
+		this.movement = movement;
+	}	
+
+	/**
+	 * This setter sets the number of enemies the avatar has killed
+	 * 
+	 * @param add_Enemies_Killed Esed to increase the number of enemies the
+	 * user has killed.
+	 */
+	public void setEnemies_killed(int add_Enemies_Killed) {
+		enemies_killed = add_Enemies_Killed;
+	}
+
+	
+	/**
+	 * This sets whether the avatar can shoot or not
+	 * 
+	 * @param shoots Sets whether or not the ship shoots a bullet.
 	 */
 	public void setShoots(boolean shoots) {
 		this.shoots = shoots;
 	}
 
 	/**
-	 * @return avatar_hit which is a boolean for if the avatar has been shot by
+	 * This returns if avatar is hit or not
+	 * 
+	 * @return avatar_hit Which is a boolean for if the avatar has been shot by
 	 * an enemy.
 	 */
 	public boolean isAvatar_hit() {
@@ -116,7 +143,8 @@ public class Avatar_Logic {
 	}
 
 	/**
-	 * Changes the x and y coordinates to a location out of view of the screen.
+	 * This method changes the x and y coordinates to a location 
+	 * out of view of the screen.
 	 */
 	public void delete() {
 		setX_coordinate(DELETE_COORD);
@@ -124,6 +152,7 @@ public class Avatar_Logic {
 	}
 
 	/**
+	 * This method move the avatar left
 	 * If the x coorinate is within the bounds of the screen, moves the ship
 	 * left by subtracting the value stored in movement from the x coordinate
 	 * of Avatar_Logic.
@@ -135,6 +164,7 @@ public class Avatar_Logic {
 	}
 
 	/**
+	 * This method moves the avatar right
 	 * If the x coorinate is within the bounds of the screen, moves the ship
 	 * right by adding the value stored in movement to the x coordinate
 	 * of Avatar_Logic.
@@ -146,6 +176,7 @@ public class Avatar_Logic {
 	}
 
 	/**
+	 * This method moves the avatar up
 	 * If the y coorinate is within the bounds of the screen, moves the ship
 	 * up by subtracting the value stored in movement from the y coordinate
 	 * of Avatar_Logic.
@@ -157,6 +188,7 @@ public class Avatar_Logic {
 	}
 
 	/**
+	 * This method moves the avatar down
 	 * If the y coorinate is within the bounds of the screen, moves the ship
 	 * down by adding the value stored in movement to the y coordinate
 	 * of Avatar_Logic.

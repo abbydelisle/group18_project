@@ -34,18 +34,22 @@ public class Bullet_Logic {
   }
 
   /**
-   * @param x_coordinate the x coord for Bullet_Logic.
-   */
-  public void setX_coordinate(int x_coordinate) {
-    this.x_coordinate = x_coordinate;
-  }
-
-  /**
    * @return y_coordinate which is used to place the Bullet_Logic.
    */
   public int getY_coordinate() {
     return y_coordinate;
   }
+  
+  public int getLife() {
+	    return life;
+  }
+  
+  /**
+   * @return movement which is the amount the Bullet_Logic moves each time.
+   */
+   public int getMovement() {
+     return movement;
+   }
 
   /**
    *@param y_coordinate the y coord for Bullet_Logic.
@@ -53,20 +57,16 @@ public class Bullet_Logic {
   public void setY_coordinate(int y_coordinate) {
     this.y_coordinate = y_coordinate;
     }
-
-  public int getLife() {
-    return life;
+  
+  /**
+   * @param x_coordinate the x coord for Bullet_Logic.
+   */
+  public void setX_coordinate(int x_coordinate) {
+    this.x_coordinate = x_coordinate;
   }
 
   public void setLife(int life) {
     this.life = life;
-  }
-
- /**
-  * @return movement which is the amount the Bullet_Logic moves each time.
-  */
-  public int getMovement() {
-    return movement;
   }
 
   /**
@@ -90,7 +90,7 @@ public class Bullet_Logic {
 	 * of Bullet_Logic.
 	 */
 	public void moveUp() {
-			setY_coordinate(getY_coordinate() - getMovement());
+		setY_coordinate(getY_coordinate() - getMovement());
 	}
 
 	/**

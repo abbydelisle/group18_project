@@ -20,14 +20,7 @@ public class Heart_Logic {
   public int getLife() {
     return life;
   }
-
-  /**
-   * @param life the number of lives.
-   */
-  public void setLife(int life) {
-    this.life = life;
-  }
-
+  
   /**
    * @return the y coordinate for where the hearts should be placed on
    * the screen
@@ -35,12 +28,19 @@ public class Heart_Logic {
   public int getY() {
     return Y_COORDINATE;
   }
-
+  
   /**
    * @return heartList which contains an x coordinate for each heart.
    */
   public ArrayList<Integer> getHeartList() {
     return heartList;
+  }
+
+  /**
+   * @param life the number of lives.
+   */
+  public void setLife(int life) {
+    this.life = life;
   }
 
   /**
